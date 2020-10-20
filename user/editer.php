@@ -1,35 +1,36 @@
 <?php 
-      session_start();
-      require("./config/db.php");
-      if(empty($_SESSION['login'])){
-        header('location: ./login.php');
-      }
+session_start();
+require("../config/db.php");
+if(empty($_SESSION['login'])){
+    header('location: ./login.php');
+  }
 
+    $res = [];
+    if(isset($_GET['editer'])){
+        $id_update = $_GET['editer'];
+        $stmt = $conn->query("SELECT * FROM user WHERE id=$id_update");
+        $stmt->execute([$id_update]); 
+        $user = $stmt->fetch();        
 ?>
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Manager Thaco</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="./adminLTE/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../adminLTE/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="./adminLTE/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../adminLTE/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Document</title>
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body>
     <div class="wrapper">
 
         <!-- Navbar -->
@@ -40,9 +41,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="index.php" class="nav-link">Home</a>
+                    <a href="../index.php" class="nav-link">Home</a>
                 </li>
-
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
             </ul>
 
             <!-- SEARCH FORM -->
@@ -70,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="./adminLTE/dist/img/user1-128x128.jpg" alt="User Avatar"
+                                <img src="../adminLTE/dist/img/user1-128x128.jpg" alt="User Avatar"
                                     class="img-size-50 mr-3 img-circle">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -87,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="./adminLTE/dist/img/user8-128x128.jpg" alt="User Avatar"
+                                <img src="../adminLTE/dist/img/user8-128x128.jpg" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -104,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <a href="#" class="dropdown-item">
                             <!-- Message Start -->
                             <div class="media">
-                                <img src="./adminLTE/dist/img/user3-128x128.jpg" alt="User Avatar"
+                                <img src="../adminLTE/dist/img/user3-128x128.jpg" alt="User Avatar"
                                     class="img-size-50 img-circle mr-3">
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
@@ -119,7 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <!-- Message End -->
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                        <a href="../index.php" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
                 </li>
                 <!-- Notifications Dropdown Menu -->
@@ -166,10 +169,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index.php" class="brand-link">
-                <img src="http://thietkelogo.com/wp-content/uploads/2017/10/logo-Thaco.jpg" alt="AdminLTE Logo"
+            <a href="../index.php" class="brand-link">
+                <img src="../adminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">Trường Hải Group </span>
+                <span class="brand-text font-weight-light">Manager </span>
             </a>
 
             <!-- Sidebar -->
@@ -177,11 +180,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="./adminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
+                        <img src="../adminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Admin</a>
+                        <a href="#" class="d-block">Hồ Đình Luân</a>
                     </div>
                 </div>
 
@@ -198,6 +201,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                 </div>
 
+                <!-- Sidebar Menu -->
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -220,13 +224,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="user/adduser.php" class="nav-link">
+                                    <a href="./adduser.php" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>Thêm tài khoản</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="user/view.php" class="nav-link">
+                                    <a href="./view.php" class="nav-link">
                                         <i class="nav-icon far fa-circle text-info"></i>
                                         <p>Tất cả tài khoản</p>
                                     </a>
@@ -241,7 +245,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./report/add.php" class="nav-link">
+                                    <a href="#" class="nav-link">
                                         <i class="nav-icon far fa-circle text-secondary"></i>
                                         <p>Thêm lỗi</p>
                                     </a>
@@ -253,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="logout.php" class="nav-link">
+                                    <a href="../logout.php" class="nav-link">
                                         <i class="nav-icon far fa-circle text-warning"></i>
                                         <p>logout</p>
                                     </a>
@@ -278,101 +282,93 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <div class="content">
-                <div class="container">
+            <section class="content">
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="chaomung" style="color: red; text-align: center;">
-                            <marquee>Chào admin - chúc bạn 1 ngày làm việc vui vẻ may mắn </marquee>
-
-
-                            <div class="col-lg-12">
-                                <div id="demo" class="carousel slide" data-ride="carousel">
-                                    <ul class="carousel-indicators">
-                                        <li data-target="#demo" data-slide-to="0" class="active"></li>
-                                        <li data-target="#demo" data-slide-to="1"></li>
-                                        <li data-target="#demo" data-slide-to="2"></li>
-                                    </ul>
-                                    <div class="carousel-inner">
-
-                                        <div class="carousel-item active">
-                                            <img src="http://thacodanang.vn/Content/UserFiles/Images/Banner/banner_1920x657_mobihome_deluxe.jpg"
-                                                alt="Los Angeles" width="1100" height="500">
-                                            <div class="carousel-caption">
-                                                <h3 style="background-color: black" ;>THACO TRƯỜNG HẢI</h3>
-                                                <p style="background-color: black" ;>Đi cùng năm tháng!</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="http://thacodanang.vn/Content/UserFiles/Images/Banner/FOTON%20M4_4.jpg"
-                                                alt="Chicago" width="1100" height="500">
-                                            <div class="carousel-caption">
-                                                <h3 style="background-color: black" ;>THACO TRƯỜNG HẢI</h3>
-                                                <p style="background-color: black" ;>Kính chào quý khách</p>
-                                            </div>
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="http://thacodanang.vn/Content/UserFiles/Files/website-1200x660.jpg"
-                                                alt="New York" width="1100" height="500">
-                                            <div class="carousel-caption">
-                                                <h3 style="background-color: black;">THACO TRƯỜNG HẢI</h3>
-                                                <p style="background-color: black" ;>We love the THACO!</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                                        <span class="carousel-control-prev-icon"></span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#demo" data-slide="next">
-                                        <span class="carousel-control-next-icon"></span>
-                                    </a>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header mb-3">
+                                    <h3 class="card-title">Danh sách quản trị viên và cấp bậc</h3>
                                 </div>
-
-
+                                <!-- /.card-header -->
+                                <div class="col-md-12">
+                                    <form action="./update_user.php" method="POST">
+                                        <div class="form-group">
+                                            <label for="">New password</label>
+                                            <input type="hidden" class="form-control" name="id_user"
+                                                value=<?= $user[0] ?>>
+                                            <input type="password" class="form-control" name="password"
+                                                value="<?php echo $user[2]; ?>" placeholder="password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Change Role</label>
+                                            <select name="role" class="form-control">
+                                                <?php
+                                                    $getuser = $conn->prepare("SELECT * FROM user"); 
+                                                    $getuser->execute();
+                                                        while($result = $getuser->fetch()) {
+                                                ?>
+                                                <option value="<?php echo $result['cap'] ?>">
+                                                    <?php                     
+                                                        echo $result['cap']; 
+                                                    ?>
+                                                </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <input class="btn btn-primary mb-3" type="submit" value="Update account">
+                                    </form>
+                                </div>
                             </div>
-                            <!-- /.col-md-6 -->
-
-                            <!-- /.col-md-6 -->
                         </div>
-                        <!-- /.row -->
-                    </div><!-- /.container-fluid -->
+                    </div>
+                    <!-- /.col -->
                 </div>
-                <!-- /.content -->
-            </div>
+                <!-- /.row -->
+                <button class="btn btn-secondary buttons-csv " tabindex="1" aria-controls="example2"
+                    type="button"><span>CSV</span></button>
         </div>
+        <!-- /.container-fluid -->
 
-        <!-- /.content-wrapper -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-            <div class="p-3">
-                <h5>Title</h5>
-                <p>Sidebar content</p>
-            </div>
-        </aside>
-        <!-- /.control-sidebar -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
 
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Đồ án tốt nghiệp 2020
-            </div>
-            <!-- Default to the left -->
-            <strong>Copyright &copy; 2020 <a href="https://www.facebook.com/BlackL.2212">Hồ Đình Luân</a>.</strong> All
-            rights Hồ Đình Luân.
-        </footer>
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="float-right d-none d-sm-inline">
+            Đồ án tốt nghiệp 2020
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2020 <a href="https://www.facebook.com/BlackL.2212">Hồ Đình Luân</a>.</strong> All
+        rights Hồ Đình Luân.
+    </footer>
     </div>
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="./adminLTE/plugins/jquery/jquery.min.js"></script>
+    <script src="../adminLTE/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="./adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="./adminLTE/dist/js/adminlte.min.js"></script>
+    <script src="../adminLTE/dist/js/adminlte.min.js"></script>
 </body>
 
 </html>
+<?php } else {
+    echo '<p>Page not found</p>';
+} ?>
